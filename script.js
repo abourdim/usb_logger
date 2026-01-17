@@ -26,6 +26,7 @@ const dom = {
   disconnectBtn: document.getElementById('disconnectBtn'),
   sendBtn: document.getElementById('sendBtn'),
   testBtn: document.getElementById('testBtn'),
+  clearStatsBtn: document.getElementById('clearStatsBtn'),
   messageInput: document.getElementById('messageInput'),
   logContainer: document.getElementById('logContainer'),
   clearLogBtn: document.getElementById('clearLogBtn'),
@@ -90,6 +91,20 @@ function log(msg, type = 'info') {
 function clearLog() {
   dom.logContainer.innerHTML = '';
   log('Log cleared');
+}
+
+function clearStats() {
+  cumulative.tests = 0;
+  cumulative.bytes = 0;
+  cumulative.chunks = 0;
+  cumulative.retries = 0;
+  cumulative.time = 0;
+  cumulative.minSpeed = Infinity;
+  cumulative.maxSpeed = 0;
+  cumulative.minRetries = Infinity;
+  cumulative.maxRetries = 0;
+  cumulative.maxRetryPerChunk = 0;
+  log('Stats cleared', 'success');
 }
 
 function getLogText() {
@@ -359,6 +374,7 @@ dom.disconnectBtn.onclick = disconnect;
 dom.sendBtn.onclick = sendMessage;
 dom.messageInput.onkeypress = e => { if (e.key === 'Enter') sendMessage(); };
 if (dom.testBtn) dom.testBtn.onclick = runTest;
+if (dom.clearStatsBtn) dom.clearStatsBtn.onclick = clearStats;
 dom.clearLogBtn.onclick = clearLog;
 dom.copyLogBtn.onclick = copyLog;
 dom.exportLogBtn.onclick = exportLog;
